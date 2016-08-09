@@ -1,0 +1,351 @@
+﻿@using UniversityManagementSystem.Models
+@{
+    Layout = null;
+    List<Student> studentList = ViewBag.StudentsList;
+}
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <title>View Student Result</title>
+    <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Content/Menu/jquery.smartmenus.min.js"></script>
+    <link href="~/Content/Menu/sm-blue.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="~/Content/DatePicker/datedropper.css" rel="stylesheet" />
+    <script src="~/Content/DatePicker/datedropper.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#main-menu')
+                .smartmenus({
+                    subMenusSubOffsetX: 2,
+                    subMenusSubOffsetY: -8
+                });
+        });
+    </script>
+    <style>
+        label.error, .field-validation-error {
+            color: red;
+            font-family: bookman old style;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .msgSuccess, .msgScss {
+            color: green;
+            font-family: bookman old style;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .filterable {
+            margin-top: 15px;
+        }
+
+            .filterable .panel-heading .pull-right {
+                margin-top: -20px;
+            }
+
+            .filterable .panel-title {
+                text-align: center;
+                font-weight: bold;
+            }
+
+            .filterable .filters input[disabled] {
+                background-color: transparent;
+                border: none;
+                cursor: auto;
+                box-shadow: none;
+                padding: 0;
+                height: auto;
+            }
+
+            .filterable .filters input[disabled]::-webkit-input-placeholder {
+                color: #333;
+            }
+
+            .filterable .filters input[disabled]::-moz-placeholder {
+                 color: #333;
+            }
+            .filterable .filters input[disabled]:-ms-input-placeholder {
+                color: #333;
+            }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id=" main-nav" role="navigation">
+            <ul id="main-menu" class="sm sm-blue">
+                <li><a>University Management System</a></li>
+                <li><a href="@Url.Action("Index","Home")">Home</a></li>
+                <li>
+                    <a href="@Url.Action("DepartmentEntry","Department")">Departments</a>
+                    <ul>
+                        <li><a href="@Url.Action("DepartmentEntry","Department")">Department Entry</a></li>
+                        <li><a href="@Url.Action("ViewDepartments","Department")">View Departments</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="@Url.Action("CourseEntry","Course")">Courses</a>
+                    <ul>
+                        <li><a href="@Url.Action("CourseEntry","Course")">Course Entry</a></li>
+                        <li><a href="@Url.Action("CourseStatics","Course")">View Course Status</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="@Url.Action("TeacherEntry","Teacher")">Teachers</a>
+                    <ul>
+                        <li><a href="@Url.Action("TeacherEntry","Teacher")">Teacher Entry</a></li>
+                        <li><a href="@Url.Action("AssignCourse","Teacher")">Assign Course</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="@Url.Action("StudentEntry","Student")">Students</a>
+                    <ul>
+                        <li><a href="@Url.Action("StudentEntry","Student")">Student Entry</a></li>
+                        <li><a href="@Url.Action("EnrollCourse","Student")">Enroll Course</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="@Url.Action("AllocateClassroom","Classroom")">Classrooms</a>
+                    <ul>
+                        <li><a href="@Url.Action("AllocateClassroom","Classroom")">Allocate Classroom</a></li>
+                        <li><a href="@Url.Action("ClassroomSchedule","Classroom")">Classroom Schedule</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="@Url.Action("StudentResultEntry","Result")">Result</a>
+                    <ul>
+                        <li><a href="@Url.Action("StudentResultEntry","Result")">Student Result Entry</a></li>
+                        <li><a href="@Url.Action("ViewStudentResult","Result")">View Student Result</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href ="">Reset All</a>
+                    <ul>
+                        <li><a href="@Url.Action("ResetCourses","Reset")">Unassign All Courses</a></li>
+                        <li><a href="@Url.Action("ResetClassrooms","Reset")">Unallocate All Classrooms</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="">Archive</a>
+                    <ul>
+                        <li><a href="@Url.Action("UnassignedCourses","Archive")">Unassigned Courses</a></li>
+                        <li><a href="@Url.Action("UnallocatedClassSchedule","Archive")">Unallocated Class Schedule</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    <div class="container">
+        <fieldset class="form-group">
+            <legend>View Student Result</legend>
+            <form id="viewStudentResultForm" method="post">
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label"></label>
+                    <div class="col-sm-5">
+                        @if (ViewBag.Message != null)
+                        {
+                            <div class="msgSuccess">
+                                @ViewBag.Message
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="ResultStudentId" class="col-sm-2 form-control-label">Student's Reg. No</label>
+                    <div class="col-sm-5">
+                        <select class="form-control" id="ResultStudentId" name="ResultStudentId">
+                            <option selected="selected" value="">Select Student</option>
+                            @foreach (var student in studentList)
+                            {
+                                <option value="@student.StudentId">@student.StudentRegistrationNo</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="ResultStudentName" class="col-sm-2 form-control-label">Student's Name</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="ResultStudentName" name="ResultStudentName" placeholder="Student's Name" readonly="readonly">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="ResultStudentEmail" class="col-sm-2 form-control-label">Student's Email</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="ResultStudentEmail" name="ResultStudentEmail" placeholder="Student's Email" readonly="readonly">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="ResultStudentDeptCode" class="col-sm-2 form-control-label">Student's Department</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="ResultStudentDeptCode" name="ResultStudentDeptCode" placeholder="Student's Department" readonly="readonly">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="viewResultButton" class="col-sm-2 form-control-label"></label>
+                    <div class="col-sm-5">
+                        <button type="button" onclick="generate()" style="width: 100%" id="viewResultButton" class="btn btn-success">Make PDF</button>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="panel panel-primary filterable">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Student Result</h3>
+                        <div class="pull-right">
+                            <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-eye-open"></span> Search Student Result</button>
+                        </div>
+                    </div>
+                    <table id="resultTable"class="table table-bordered">
+                        <thead>
+                            <tr class="filters">
+                                <th><input type="text" class="form-control" placeholder="Course Code" disabled></th>
+                                <th><input type="text" class="form-control" placeholder="Course Name" disabled></th>
+                                <th><input type="text" class="form-control" placeholder="Grade" disabled></th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultTableColumn"></tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="footer container" style="text-align: center; margin-top: 15px">
+            <p>Copyright &copy; 2016 Code Craker's. All rights reserved.</p>
+        </div>
+    </nav>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Content/PDF Generator/jspdf.min.js"></script>
+    <script src="~/Content/PDF Generator/jspdf.plugin.autotable.src.js"></script>
+<script>
+    function generate() {
+        var doc = new jsPDF('p', 'pt','letter');
+        var name = document.getElementById("ResultStudentName").value;
+        var department = document.getElementById("ResultStudentDeptCode").value;
+        var regNo = document.getElementById("ResultStudentId").options[document.getElementById('ResultStudentId').selectedIndex].text;
+        doc.setFont("courier");
+        doc.setFontSize(22);
+        doc.text(225, 20, 'Result Sheet');
+        doc.setFontSize(14);
+        doc.text(40, 60, 'Name: ' + name);
+        doc.setFontSize(14);
+        doc.text(40, 80, 'Department: ' + department);
+        doc.setFontSize(14);
+        doc.text(40, 100, 'Registration No: ' + regNo);
+        var columns = ["Course Code", "Course Name", "Grade"];
+        var elem = document.getElementById("resultTable");
+        var res = doc.autoTableHtmlToJson(elem);
+        doc.autoTable(columns, res.data, {
+            margin: {
+                top: 110
+            },
+            styles: {
+                font: 'courier',
+                fillStyle: 'DF',
+                lineColor: [44, 62, 80],
+                lineWidth: 2
+            },
+            headerStyles: {
+                fillColor: [44, 62, 80],
+                fontSize: 15,
+                rowHeight: 30
+            },
+            bodyStyles: {
+                fillColor: [52, 73, 94],
+                fontSize: 14,
+                textColor: 240
+            },
+            alternateRowStyles: {
+                fillColor: [74, 96, 117]
+            }});
+        doc.save("Result.pdf");
+    }
+    $(document).ready(function () {
+        $('.msgSuccess').delay(3000).fadeOut(1000);
+        $("#ResultStudentId").change(function () {
+            var studentId = $("#ResultStudentId").val();
+            var json = { studentId: studentId };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetStudentDetails", "Result")',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (student) {
+                    $('#ResultStudentName').val(student.StudentName);
+                    $("#ResultStudentEmail").val(student.StudentEmail);
+                    $("#ResultStudentDeptCode").val(student.StudentDepartmentCode);
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("GetStudentResult", "Result")',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(json),
+                        success: function (result) {
+                            var table;
+                            if (result === "") table = '<tr><td>' + "No Result Found For This Student." + '</td></tr>';
+                            else {
+                                $.each(result, function (key, value) {
+                                    table += '<tr><td>' + value.ResultStudentCourseCode + '</td><td>' + value.ResultStudentCourseName + '</td><td>' + value.ResultGradeName + '</td></tr>';
+                                });
+                            }
+                            $("#resultTableColumn").html(table);
+                        }
+                    });
+                }
+            });
+        });
+        $("#viewStudentResultForm").validate({
+            rules: {
+                ResultStudentId: {
+                    required: true
+                }
+            },
+            messages: {
+                ResultStudentId: {
+                    required: "Please Select Student From List"
+                }
+            }
+        });
+        $('.filterable .btn-filter').click(function () {
+            var $panel = $(this).parents('.filterable'),
+                $filters = $panel.find('.filters input'),
+                $tbody = $panel.find('.table tbody');
+            if ($filters.prop('disabled') == true) {
+                $filters.prop('disabled', false);
+                $filters.first().focus();
+            } else {
+                $filters.val('').prop('disabled', true);
+                $tbody.find('.no-result').remove();
+                $tbody.find('tr').show();
+            }
+        });
+        $('.filterable .filters input').keyup(function (e) {
+            /* Ignore tab key */
+            var code = e.keyCode || e.which;
+            if (code == '9') return;
+            /* Useful DOM data and selectors */
+            var $input = $(this),
+                inputContent = $input.val().toLowerCase(),
+                $panel = $input.parents('.filterable'),
+                column = $panel.find('.filters th').index($input.parents('th')),
+                $table = $panel.find('.table'),
+                $rows = $table.find('tbody tr');
+            /* Dirtiest filter function ever ;) */
+            var $filteredRows = $rows.filter(function () {
+                var value = $(this).find('td').eq(column).text().toLowerCase();
+                return value.indexOf(inputContent) === -1;
+            });
+            /* Clean previous no-result if exist */
+            $table.find('tbody .no-result').remove();
+            /* Show all rows, hide filtered ones (never do that outside of a demo ! xD) */
+            $rows.show();
+            $filteredRows.hide();
+            /* Prepend no-result row if all rows are filtered */
+            if ($filteredRows.length === $rows.length) {
+                $table.find('tbody').prepend($('<tr class="no-result text-center"><td colspan="' + $table.find('.filters th').length + '">No Result Found</td></tr>'));
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <title>Reset All Classrooms</title>
+    <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Content/Menu/jquery.smartmenus.min.js"></script>
+    <link href="~/Content/Menu/sm-blue.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="~/Content/Confirm/jquery-confirm.min.css" rel="stylesheet" />
+    <script src="~/Content/Confirm/jquery-confirm.min.js"></script>
+    <script type="text/javascript">
+            $(function() {
+                $('#main-menu')
+                    .smartmenus({
+                        subMenusSubOffsetX: 2,
+                        subMenusSubOffsetY: -8
+                    });
+            });
+    </script>
+    <style>
+        .msgScss {
+            color: green;
+            font-family: bookman old style;
+            font-size: 25px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .msgErr {
+            color: red;
+            font-family: bookman old style;
+            font-size: 25px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id=" main-nav" role="navigation">
+            <ul id="main-menu" class="sm sm-blue">
+                <li><a>University Management System</a></li>
+                <li><a href="@Url.Action("Index","Home")">Home</a></li>
+                <li>
+                    <a href="@Url.Action("DepartmentEntry","Department")">Departments</a>
+                    <ul>
+                        <li><a href="@Url.Action("DepartmentEntry","Department")">Department Entry</a></li>
+                        <li><a href="@Url.Action("ViewDepartments","Department")">View Departments</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="@Url.Action("CourseEntry","Course")">Courses</a>
+                    <ul>
+                        <li><a href="@Url.Action("CourseEntry","Course")">Course Entry</a></li>
+                        <li><a href="@Url.Action("CourseStatics","Course")">View Course Status</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="@Url.Action("TeacherEntry","Teacher")">Teachers</a>
+                    <ul>
+                        <li><a href="@Url.Action("TeacherEntry","Teacher")">Teacher Entry</a></li>
+                        <li><a href="@Url.Action("AssignCourse","Teacher")">Assign Course</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="@Url.Action("StudentEntry","Student")">Students</a>
+                    <ul>
+                        <li><a href="@Url.Action("StudentEntry","Student")">Student Entry</a></li>
+                        <li><a href="@Url.Action("EnrollCourse","Student")">Enroll Course</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="@Url.Action("AllocateClassroom","Classroom")">Classrooms</a>
+                    <ul>
+                        <li><a href="@Url.Action("AllocateClassroom","Classroom")">Allocate Classroom</a></li>
+                        <li><a href="@Url.Action("ClassroomSchedule","Classroom")">Classroom Schedule</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="@Url.Action("StudentResultEntry","Result")">Result</a>
+                    <ul>
+                        <li><a href="@Url.Action("StudentResultEntry","Result")">Student Result Entry</a></li>
+                        <li><a href="@Url.Action("ViewStudentResult","Result")">View Student Result</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href ="">Reset All</a>
+                    <ul>
+                        <li><a href="@Url.Action("ResetCourses","Reset")">Unassign All Courses</a></li>
+                        <li><a href="@Url.Action("ResetClassrooms","Reset")">Unallocate All Classrooms</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="">Archive</a>
+                    <ul>
+                        <li><a href="@Url.Action("UnassignedCourses","Archive")">Unassigned Courses</a></li>
+                        <li><a href="@Url.Action("UnallocatedClassSchedule","Archive")">Unallocated Class Schedule</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    <div class="container">
+        <fieldset class="form-group">
+            <legend>Unallocate All Classrooms</legend>
+            <form id="assignCourseForm" method="post">
+                <div class="msgScss">
+                    <label id="msgScssLabel">All Classrooms Unallocated Successfully</label>
+                </div>
+                <div class="msgErr">
+                    <label id="msgErrLabel">Classroom Unallocation Process Failed</label>
+                </div>
+                <button type="submit" style="width: 100%; font-size: 20px;font-weight: bold" id="resetClassroomsButton" class="btn btn-success btn-lg btn-block">Unallocate All Classrooms</button>
+            </form>
+        </fieldset>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="footer container" style="text-align: center; margin-top: 15px">
+            <p>Copyright &copy; 2016 Code Craker's. All rights reserved.</p>
+        </div>
+    </nav>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.msgScss').hide();
+            $('.msgErr').hide();
+            $('#resetClassroomsButton').on('click', function () {
+                                var submitForm = false;
+                                $.confirm({
+                                    title: 'Are You Sure?',
+                                    content: 'Are You Sure Enoung To Unallocate All Classrooms ?',
+                                    confirmButton: 'Yes, I Am Sure!',
+                                    cancelButton: 'No, I Change My Mind',
+                                    icon: 'fa fa-question-circle',
+                                    keyboardEnabled: true,
+                                    theme: 'bootstrap',
+                                    backgroundDismiss: true,
+                                    confirmButtonClass: 'btn-success',
+                                    cancelButtonClass: 'btn-danger',
+                                    animation: 'scale',
+                                    animationClose: 'top',
+                                    opacity: 0.5,
+                                    confirm: function () {
+                                        var confirMation = "YES";
+                                        $.ajax({
+                                            type: "POST",
+                                            url: '@Url.Action("ResetClassrooms", "Reset")',
+                                            data: JSON.stringify(confirMation),
+                                            contentType: "application/json; charset=utf-8",
+                                            success: function (data) {
+                                                if (data === "All Classrooms Unallocated Successfully") {
+                                                    $(".msgScss").show();
+                                                    $('.msgScss').delay(3000).fadeOut(1000);
+                                                } else {
+                                                    $(".msgErr").show();
+                                                    $('.msgErr').delay(3000).fadeOut(1000);
+                                                }
+                                                submitForm = true;
+                                            }
+                                        });
+                                    }
+                                });
+                            $('form').submit(function () {
+                                return submitForm;
+                            });
+                        });
+            });
+    </script>
+
+</body>
+</html>

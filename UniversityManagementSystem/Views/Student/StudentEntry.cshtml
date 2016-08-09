@@ -1,0 +1,259 @@
+﻿@using UniversityManagementSystem.Models
+@{
+    Layout = null;
+    List<Department> departmentList = ViewBag.DepartmentList;
+}
+
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <title>Student Entry</title>
+    <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+    <script src="~/Content/Menu/jquery.smartmenus.min.js"></script>
+    <link href="~/Content/Menu/sm-blue.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="~/Content/DatePicker/datedropper.css" rel="stylesheet" />
+    <script src="~/Content/DatePicker/datedropper.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#main-menu')
+                .smartmenus({
+                    subMenusSubOffsetX: 2,
+                    subMenusSubOffsetY: -8
+                });
+        });
+    </script>
+    <style>
+        label.error, .field-validation-error {
+            color: red;
+            font-family: bookman old style;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .msgSuccess {
+            color: green;
+            font-family: bookman old style;
+            font-size: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id=" main-nav" role="navigation">
+            <ul id="main-menu" class="sm sm-blue">
+                <li><a>University Management System</a></li>
+                <li><a href="@Url.Action("Index","Home")">Home</a></li>
+                <li>
+                    <a href="@Url.Action("DepartmentEntry","Department")">Departments</a>
+                    <ul>
+                        <li><a href="@Url.Action("DepartmentEntry","Department")">Department Entry</a></li>
+                        <li><a href="@Url.Action("ViewDepartments","Department")">View Departments</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="@Url.Action("CourseEntry","Course")">Courses</a>
+                    <ul>
+                        <li><a href="@Url.Action("CourseEntry","Course")">Course Entry</a></li>
+                        <li><a href="@Url.Action("CourseStatics","Course")">View Course Status</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="@Url.Action("TeacherEntry","Teacher")">Teachers</a>
+                    <ul>
+                        <li><a href="@Url.Action("TeacherEntry","Teacher")">Teacher Entry</a></li>
+                        <li><a href="@Url.Action("AssignCourse","Teacher")">Assign Course</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="@Url.Action("StudentEntry","Student")">Students</a>
+                    <ul>
+                        <li><a href="@Url.Action("StudentEntry","Student")">Student Entry</a></li>
+                        <li><a href="@Url.Action("EnrollCourse","Student")">Enroll Course</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="@Url.Action("AllocateClassroom","Classroom")">Classrooms</a>
+                    <ul>
+                        <li><a href="@Url.Action("AllocateClassroom","Classroom")">Allocate Classroom</a></li>
+                        <li><a href="@Url.Action("ClassroomSchedule","Classroom")">Classroom Schedule</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="@Url.Action("StudentResultEntry","Result")">Result</a>
+                    <ul>
+                        <li><a href="@Url.Action("StudentResultEntry","Result")">Student Result Entry</a></li>
+                        <li><a href="@Url.Action("ViewStudentResult","Result")">View Student Result</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href ="">Reset All</a>
+                    <ul>
+                        <li><a href="@Url.Action("ResetCourses","Reset")">Unassign All Courses</a></li>
+                        <li><a href="@Url.Action("ResetClassrooms","Reset")">Unallocate All Classrooms</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="">Archive</a>
+                    <ul>
+                        <li><a href="@Url.Action("UnassignedCourses","Archive")">Unassigned Courses</a></li>
+                        <li><a href="@Url.Action("UnallocatedClassSchedule","Archive")">Unallocated Class Schedule</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    <div class="container">
+        <fieldset class="form-group">
+            <legend>Save Student</legend>
+            <form id="registerStudentForm" method="POST">
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label"></label>
+                    <div class="col-sm-5">
+                        @if (ViewBag.Message != null)
+                        {
+                            <div class="msgSuccess">
+                                @Html.Raw(ViewBag.Message)
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="StudentName" class="col-sm-2 form-control-label">Student's Name</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="StudentName" name="StudentName" placeholder="Student's Name">
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="StudentEmail" class="col-sm-2 form-control-label">Student's Email</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="StudentEmail" name="StudentEmail" placeholder="email@email.email">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="StudentContactNo" class="col-sm-2 form-control-label">Students's Contact No</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="StudentContactNo" name="StudentContactNo" placeholder="+8801XXXXXXXXX">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="StudentRegDate" class="col-sm-2 form-control-label">Student's Reg Date</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="StudentRegDate" name="StudentRegDate" placeholder="mm/dd/yyyy">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="StudentAddress" class="col-sm-2 form-control-label">Student's Address</label>
+                    <div class="col-sm-5">
+                        <textarea type="text" class="form-control" id="StudentAddress" name="StudentAddress" placeholder="Student's Address" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="StudentDepartmentId" class="col-sm-2 form-control-label">Students's Department</label>
+                    <div class="col-sm-5">
+                        <select class="form-control" id="StudentDepartmentId" name="StudentDepartmentId">
+                            <option selected="selected" value="">Select Department</option>
+                            @foreach (var department in departmentList)
+                            {
+                                <option value="@department.DepartmentId">@department.DepartmentCode</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="saveCourseButton" class="col-sm-2 form-control-label"></label>
+                    <div class="col-sm-5">
+                        <button type="submit" style="width: 100%" id="saveCourseButton" class="btn btn-success">Register Student</button>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="footer container" style="text-align: center; margin-top: 15px">
+            <p>Copyright &copy; 2016 Code Craker's. All rights reserved.</p>
+        </div>
+    </nav>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script>
+    $("#StudentRegDate").dateDropper();
+    $(document).ready(function () {
+        $('.msgSuccess').delay(5000).fadeOut(1000);
+        $.validator.addMethod("checkEmailExist", function () {
+                var url = '@Url.Action("IsEmailExists", "Student")';
+                var email = $('#StudentEmail').val();
+                var result = false;
+                $.ajax({
+                    type:"POST",
+                    async: false,
+                    url: url,
+                    data: {studentEmail: email },
+                    success: function (data) {
+                        result = (data === true) ? true : false;
+                    }
+                });
+                return result;
+            },"This Email Is Already Taken! Try Another."
+        );
+        $.validator.addMethod("phoneBD", function (phone_number, element) {
+                phone_number = phone_number.replace(/\s+/g, "");
+                return this.optional(element) || phone_number.length > 13 && phone_number.match(/^(\+8801[1|5|6|7|8|9]{1}[0-9]{8})$/);
+            }, "Invalid !! Please Provide Valid Contact No."
+        );
+        $("#registerStudentForm").validate({
+            rules: {
+                StudentName: {
+                    required: true
+                },
+                StudentEmail: {
+                    required: true,
+                    checkEmailExist: true,
+                    email: true
+                },
+                StudentContactNo: {
+                    required: true,
+                    minlength:14,
+                    phoneBD:true
+                },
+                StudentRegDate: {
+                    required: true
+                },
+                StudentAddress: {
+                    required: true
+                },
+                StudentDepartmentId: {
+                    required: true
+                }
+            },
+            messages: {
+                StudentName: {
+                    required: "Please Provide Student's Name"
+                },
+                StudentEmail: {
+                    required: "Please Provide Student's Email",
+                    email: "Invalid Email!! Please Provide A Valid Emaill"
+                },
+                StudentContactNo: {
+                    required: "Please Provide Student's Contact No",
+                    minlength: "Too Short Contact No"
+                },
+                StudentRegDate: {
+                    required: "Please Provide Student's Registration Date"
+                },
+                StudentAddress: {
+                    required: "Please Provide Student's Address"
+                },
+                StudentDepartmentId: {
+                    required: "Please Select A Department"
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

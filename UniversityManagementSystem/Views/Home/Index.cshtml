@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <title>Welcome to Our University</title>
+    <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+    <script src="~/Content/Menu/jquery.smartmenus.min.js"></script>
+    <link href="~/Content/TextAnimator/simpletextrotator.css" rel="stylesheet" />
+    <link href="~/Content/NivoSlider/nivo-slider.css" rel="stylesheet"/>
+    <link href="~/Content/NivoSlider/theme/default.css" rel="stylesheet" />
+    <script src="~/Scripts/jqIsoText.js"></script>
+    <link href="~/Content/Menu/sm-blue.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(function() {
+            $('#main-menu')
+                .smartmenus({
+                    subMenusSubOffsetX: 2,
+                    subMenusSubOffsetY: -8
+                });
+        });
+    </script>
+    <style>
+        label.error {
+            color: red;
+            font-family: bookman old style;
+            font-size: 15px;
+        }
+
+        .msgSuccess {
+            color: green;
+            font-family: bookman old style;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .typewriter {
+            font-size: 30px;
+            padding: 15px;
+            font-family: Oldman Bookstyle;
+            color: #000080;
+            border: 2px solid #25383C;
+            text-align: center;
+        }
+        .features {
+            background: #FDEEF4;
+            border: 2px dashed #008080;
+            color: #254117;
+            font-family: century gothic;
+            font-size: 30px;
+            font-weight: bold;
+            padding: 65px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id=" main-nav" role="navigation">
+        <ul id="main-menu" class="sm sm-blue">
+            <li><a>University Management System</a></li>
+            <li><a href="@Url.Action("Index","Home")">Home</a></li>
+            <li>
+                <a href="@Url.Action("DepartmentEntry","Department")">Departments</a>
+                <ul>
+                    <li><a href="@Url.Action("DepartmentEntry","Department")">Department Entry</a></li>
+                    <li><a href="@Url.Action("ViewDepartments","Department")">View Departments</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="@Url.Action("CourseEntry","Course")">Courses</a>
+                <ul>
+                    <li><a href="@Url.Action("CourseEntry","Course")">Course Entry</a></li>
+                    <li><a href="@Url.Action("CourseStatics","Course")">View Course Status</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="@Url.Action("TeacherEntry","Teacher")">Teachers</a>
+                <ul>
+                    <li><a href="@Url.Action("TeacherEntry","Teacher")">Teacher Entry</a></li>
+                    <li><a href="@Url.Action("AssignCourse","Teacher")">Assign Course</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="@Url.Action("StudentEntry","Student")">Students</a>
+                <ul>
+                    <li><a href="@Url.Action("StudentEntry","Student")">Student Entry</a></li>
+                    <li><a href="@Url.Action("EnrollCourse","Student")">Enroll Course</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="@Url.Action("AllocateClassroom","Classroom")">Classrooms</a>
+                <ul>
+                    <li><a href="@Url.Action("AllocateClassroom","Classroom")">Allocate Classroom</a></li>
+                    <li><a href="@Url.Action("ClassroomSchedule","Classroom")">Classroom Schedule</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="@Url.Action("StudentResultEntry","Result")">Result</a>
+                <ul>
+                    <li><a href="@Url.Action("StudentResultEntry","Result")">Student Result Entry</a></li>
+                    <li><a href="@Url.Action("ViewStudentResult","Result")">View Student Result</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="">Reset All</a>
+                <ul>
+                    <li><a href="@Url.Action("ResetCourses","Reset")">Unassign All Courses</a></li>
+                    <li><a href="@Url.Action("ResetClassrooms","Reset")">Unallocate All Classrooms</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="">Archive</a>
+                <ul>
+                    <li><a href="@Url.Action("UnassignedCourses","Archive")">Unassigned Courses</a></li>
+                    <li><a href="@Url.Action("UnallocatedClassSchedule","Archive")">Unallocated Class Schedule</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div class="container">
+        <p class="typewriter">Welcome To Our University Management System. It's A Sample Management System.</p>
+        <h1 class="features">You Can <span class="rotate">Add Department, View Department, Add Course, View Course, Add Teacher, Assign Course, Add Student, Enroll Course,Add Result,Generate Result Sheet,Allocate Classroom,Unassign Courses,Unallocate Classrooms</span> With This Demo Management System</h1>
+    </div>
+<div class="slider-wrapper theme-default">
+    <div id="slider" class="nivoSlider">
+        <img src="~/Content/Images/1.jpg"/>
+        <img src="~/Content/Images/2.jpg"/>
+        <img src="~/Content/Images/3.jpg"/>
+        <img src="~/Content/Images/4.jpg"/>
+        <img src="~/Content/Images/5.jpg"/>
+        <img src="~/Content/Images/6.jpg"/>
+    </div>
+</div>
+    <nav class="navbar navbar-default">
+        <div class="footer container" style="text-align: center; margin-top: 15px; ">
+            <p>Copyright &copy; 2016 Code Craker's. All rights reserved.</p>
+        </div>
+    </nav>
+    <script src="~/Content/NivoSlider/jquery.nivo.slider.js"></script>
+    <script src="~/Content/TextAnimator/jquery.simple-text-rotator.js"></script>
+<script>
+    
+    var text = $('.typewriter').text();
+    var length = text.length;
+    var timeOut;
+    var character = 0;
+
+
+    (function typeWriter() {
+        timeOut = setTimeout(function () {
+            character++;
+            var type = text.substring(0, character);
+            $('.typewriter').text(type);
+            typeWriter();
+
+            if (character === length) {
+                clearTimeout(timeOut);
+            }
+
+        }, 100);
+    }());
+
+    $(document).ready(function () {
+        $('#slider').nivoSlider();
+        $(".features .rotate").textrotator({
+            animation: "spin",
+            speed: 2000
+        });
+    });
+</script>
+
+</body>
+</html>
